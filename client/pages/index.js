@@ -6,7 +6,7 @@ function Index() {
 
     const fetchAllFoods = async () => {
         try {
-            const response = await axios.get(process.env.NEXT_PUBLIC_SERVER_URL + 'api/food/getAllFoods');
+            const response = await axios.get(process.env.NEXT_PUBLIC_SERVER_URL + '/api/food/getAllFoods');
             setFoods(response.data);
         } catch (error) {
             console.error('Error fetching foods', error);
