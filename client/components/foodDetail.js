@@ -7,6 +7,7 @@ const FoodDetail = ({ food, onUpdate }) => {
     const [newType, setNewType] = useState('');
     const [newIngredient, setNewIngredient] = useState('');
 
+    // Add new type
     const addType = () => {
         if (newType.trim() !== '') {
             setType([...type, newType.trim()]);
@@ -14,11 +15,22 @@ const FoodDetail = ({ food, onUpdate }) => {
         }
     };
 
+    // Add new ingredient
     const addIngredient = () => {
         if (newIngredient.trim() !== '') {
             setIngredients([...ingredients, newIngredient.trim()]);
             setNewIngredient('');
         }
+    };
+
+    // Delete a specific type
+    const deleteType = (typeToDelete) => {
+        setType(type.filter((t) => t !== typeToDelete));
+    };
+
+    // Delete a specific ingredient
+    const deleteIngredient = (ingredientToDelete) => {
+        setIngredients(ingredients.filter((ing) => ing !== ingredientToDelete));
     };
 
     const saveFoodDetails = async () => {
@@ -59,7 +71,15 @@ const FoodDetail = ({ food, onUpdate }) => {
                 <h3 className="text-lg font-semibold">Type</h3>
                 <ul className="list-disc pl-5">
                     {type.map((t, index) => (
-                        <li key={index} className="mb-1">{t}</li>
+                        <li key={index} className="mb-1 flex items-center justify-between">
+                            {t}
+                            <button
+                                className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                                onClick={() => deleteType(t)}
+                            >
+                                Delete
+                            </button>
+                        </li>
                     ))}
                 </ul>
                 <input
@@ -81,7 +101,15 @@ const FoodDetail = ({ food, onUpdate }) => {
                 <h3 className="text-lg font-semibold">Ingredients</h3>
                 <ul className="list-disc pl-5">
                     {ingredients.map((ing, index) => (
-                        <li key={index} className="mb-1">{ing}</li>
+                        <li key={index} className="mb-1 flex items-center justify-between">
+                            {ing}
+                            <button
+                                className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                                onClick={() => deleteIngredient(ing)}
+                            >
+                                Delete
+                            </button>
+                        </li>
                     ))}
                 </ul>
                 <input
