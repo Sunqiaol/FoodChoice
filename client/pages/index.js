@@ -23,6 +23,13 @@ function Index() {
         setSelectedFood(null); // Close the popup
     };
 
+    // Update a specific food item in the `foods` state
+    const updateFoodInList = (updatedFood) => {
+        setFoods((prevFoods) =>
+            prevFoods.map((food) => (food.id === updatedFood.id ? updatedFood : food))
+        );
+    };
+
     return (
         <div>
             <div className="nav-bar flex bg-blue-500 h-12 items-center justify-between px-5">
@@ -56,7 +63,8 @@ function Index() {
                         className="popup-content"
                         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the popup
                     >
-                        <FoodDetail food={selectedFood} />
+                        {/* Pass the `updateFoodInList` function to FoodDetail */}
+                        <FoodDetail food={selectedFood} onUpdate={updateFoodInList} />
                         <button
                             className="close-popup bg-red-500 text-white px-4 py-2 rounded mt-4"
                             onClick={closePopup}

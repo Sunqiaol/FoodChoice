@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const FoodDetail = ({ food }) => {
+const FoodDetail = ({ food, onUpdate }) => {
     const [type, setType] = useState(food?.type || []);
     const [ingredients, setIngredients] = useState(food?.ingredients || []);
     const [newType, setNewType] = useState('');
     const [newIngredient, setNewIngredient] = useState('');
+
     const addType = () => {
         if (newType.trim() !== '') {
             setType([...type, newType.trim()]);
@@ -22,12 +23,28 @@ const FoodDetail = ({ food }) => {
 
     const saveFoodDetails = async () => {
         try {
-            const response = await axios.post(process.env.NEXT_PUBLIC_SERVER_URL +'/api/food/updateType', {
-                id: food.id,
-                type,
-            });
+            // Update type
+            const responseType = await axios.post(
+                process.env.NEXT_PUBLIC_SERVER_URL + '/api/food/updateType',
+                { id: food.id, type }
+            );
+
+            // Update ingredients
+            const responseIngredients = await axios.post(
+                process.env.NEXT_PUBLIC_SERVER_URL + '/api/food/updateIngredients',
+                { id: food.id, ingredients }
+            );
+
+            // Call onUpdate with the updated food object
+            if (onUpdate) {
+                onUpdate({
+                    ...food,
+                    type: responseType.data.food.type,
+                    ingredients: responseIngredients.data.food.ingredients,
+                });
+            }
+
             alert('Food details updated successfully!');
-            console.log(response.data);
         } catch (error) {
             console.error('Error updating food details:', error);
             alert('Failed to update food details.');
