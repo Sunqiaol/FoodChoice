@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import FoodDetail from './components/foodDetail';
+import FoodDetail from '../components/foodDetail';
 
 function Index() {
     const [foods, setFoods] = useState([]); // Initialize state with an empty array
