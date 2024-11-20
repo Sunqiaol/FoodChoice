@@ -6,7 +6,17 @@ const food = db.define('food', {
     name: {
         type: DataTypes.STRING,
         allowNull: false
-      }
+      },
+      type: {
+        type: DataTypes.JSON, // Store the array of strings as JSON
+        allowNull: true, // Make it required (optional)
+    },
+    ingredients: {
+        type: DataTypes.JSON, // JSON column for storing array of strings
+        allowNull: true, // Make it required
+    },
+
+    
 
 
 }, {
